@@ -9,8 +9,6 @@ uses
    display,
    inifiles;
 
-{$i readstr.inc}
-
 procedure introduction;
 begin
    clrscr;
