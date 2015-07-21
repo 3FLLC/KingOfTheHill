@@ -1,0 +1,65 @@
+program king;
+
+/////////////////////////////////////////////////////////////////////////////
+// King of the hill
+/////////////////////////////////////////////////////////////////////////////
+
+uses
+   math,
+   display,
+   inifiles;
+
+procedure introduction;
+begin
+   clrscr;
+   textcolor(yellow);
+   writeln('Welcome to King of the hill v1.0');
+   textcolor(white);
+end;
+
+function generatefighters:longint;
+begin
+   result:=random(10,100);
+   writeln('you now have ',result,' more fighters.');
+end;
+
+procedure playgame;
+const
+   spinner=['0','O','o','.','o','O'];
+
+var
+   playername:string;
+   ch:char;
+   spin:byte;
+   spindelay:byte;
+
+begin
+   write('what is your name? ');
+   playername:=readstr(25);
+   writeln(playername,' press spacebar to generate more fighters.');
+   ch:=#0;
+   spin:=0;
+   spindelay:=0;
+   while ch!=#27 do begin
+      if keypressed then begin
+         ch:=readkey;
+         if ch=#32 then generatefighters;
+      end
+      else begin
+         write(spinner[spin]+#8);
+         yield(1);
+         inc(spindelay);
+         if spindelay>250 then begin
+            inc(spin);
+            if spin>5 then spin:=0;
+            spindelay:=0;
+         end;
+      end;
+   end;
+end;
+
+begin
+   randomize;
+   introduction;
+   playgame;
+end.
